@@ -1,0 +1,191 @@
+[
+  {
+    "date": "2018-09-28",
+    "country": "Indonesia",
+    "magnitude": 7.5,
+    "place": "78 km N of Palu, Indonesia",
+    "latitude": -0.178,
+    "longitude": 119.84,
+    "source": "USGS historical event catalog"
+  },
+  {
+    "date": "2004-12-26",
+    "country": "Indonesia",
+    "magnitude": 9.1,
+    "place": "off the west coast of northern Sumatra, Indonesia",
+    "latitude": 3.30,
+    "longitude": 95.98,
+    "source": "USGS historical event catalog"
+  },
+  {
+    "date": "2005-10-08",
+    "country": "Pakistan",
+    "magnitude": 7.6,
+    "place": "Pakistan-administered Kashmir, Pakistan",
+    "latitude": 34.49,
+    "longitude": 73.63,
+    "source": "USGS historical event catalog"
+  },
+  {
+    "date": "2015-04-25",
+    "country": "Nepal",
+    "magnitude": 7.8,
+    "place": "36 km E of Khudi, Nepal",
+    "latitude": 28.23,
+    "longitude": 84.73,
+    "source": "USGS historical event catalog"
+  },
+  {
+    "date": "2011-03-11",
+    "country": "Japan",
+    "magnitude": 9.1,
+    "place": "near the east coast of Honshu, Japan",
+    "latitude": 38.30,
+    "longitude": 142.37,
+    "source": "USGS historical event catalog"
+  },
+  {
+    "date": "1995-01-17",
+    "country": "Japan",
+    "magnitude": 6.9,
+    "place": "Kobe, Japan",
+    "latitude": 34.59,
+    "longitude": 135.07,
+    "source": "USGS historical event catalog"
+  },
+  {
+    "date": "2023-02-06",
+    "country": "Turkey",
+    "magnitude": 7.8,
+    "place": "Pazarcik, Kahramanmaras, Turkey",
+    "latitude": 37.17,
+    "longitude": 37.03,
+    "source": "USGS historical event catalog"
+  },
+  {
+    "date": "1999-08-17",
+    "country": "Turkey",
+    "magnitude": 7.6,
+    "place": "Izmit, Turkey",
+    "latitude": 40.75,
+    "longitude": 29.86,
+    "source": "USGS historical event catalog"
+  },
+  {
+    "date": "2008-05-12",
+    "country": "China",
+    "magnitude": 7.9,
+    "place": "Sichuan, China",
+    "latitude": 31.00,
+    "longitude": 103.32,
+    "source": "USGS historical event catalog"
+  },
+  {
+    "date": "2001-01-26",
+    "country": "India",
+    "magnitude": 7.7,
+    "place": "Gujarat, India",
+    "latitude": 23.42,
+    "longitude": 70.23,
+    "source": "USGS historical event catalog"
+  },
+  {
+    "date": "2009-04-06",
+    "country": "Italy",
+    "magnitude": 6.3,
+    "place": "L'Aquila, Italy",
+    "latitude": 42.33,
+    "longitude": 13.33,
+    "source": "USGS historical event catalog"
+  },
+  {
+    "date": "2016-08-24",
+    "country": "Italy",
+    "magnitude": 6.2,
+    "place": "Amatrice, Italy",
+    "latitude": 42.72,
+    "longitude": 13.19,
+    "source": "USGS historical event catalog"
+  },
+  {
+    "date": "2017-09-19",
+    "country": "Mexico",
+    "magnitude": 7.1,
+    "place": "Puebla, Mexico",
+    "latitude": 18.58,
+    "longitude": -98.49,
+    "source": "USGS historical event catalog"
+  },
+  {
+    "date": "1985-09-19",
+    "country": "Mexico",
+    "magnitude": 8.0,
+    "place": "Michoacan, Mexico",
+    "latitude": 18.19,
+    "longitude": -102.53,
+    "source": "USGS historical event catalog"
+  },
+  {
+    "date": "2016-11-13",
+    "country": "New Zealand",
+    "magnitude": 7.8,
+    "place": "Kaikoura, New Zealand",
+    "latitude": -42.69,
+    "longitude": 173.02,
+    "source": "USGS historical event catalog"
+  },
+  {
+    "date": "2011-02-22",
+    "country": "New Zealand",
+    "magnitude": 6.2,
+    "place": "Christchurch, New Zealand",
+    "latitude": -43.58,
+    "longitude": 172.68,
+    "source": "USGS historical event catalog"
+  },
+  {
+    "date": "1994-01-17",
+    "country": "USA",
+    "magnitude": 6.7,
+    "place": "Northridge, California, USA",
+    "latitude": 34.21,
+    "longitude": -118.54,
+    "source": "USGS historical event catalog"
+  },
+  {
+    "date": "1989-10-17",
+    "country": "USA",
+    "magnitude": 6.9,
+    "place": "Loma Prieta, California, USA",
+    "latitude": 37.04,
+    "longitude": -121.88,
+    "source": "USGS historical event catalog"
+  },
+  {
+    "date": "2013-10-15",
+    "country": "Philippines",
+    "magnitude": 7.1,
+    "place": "Bohol, Philippines",
+    "latitude": 9.88,
+    "longitude": 124.11,
+    "source": "USGS historical event catalog"
+  },
+  {
+    "date": "2007-08-15",
+    "country": "Peru",
+    "magnitude": 8.0,
+    "place": "Pisco, Peru",
+    "latitude": -13.39,
+    "longitude": -76.60,
+    "source": "USGS historical event catalog"
+  },
+  {
+    "date": "2025-03-28",
+    "country": "Myanmar",
+    "magnitude": 7.7,
+    "place": "Sagaing, Myanmar",
+    "latitude": 22.00,
+    "longitude": 95.98,
+    "source": "USGS historical event catalog"
+  }
+]

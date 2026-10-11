@@ -1,0 +1,12 @@
+
+venv/
+.venv/
+__pycache__/
+*.py[cod]
+.env
+.DS_Store
+*.log
+data/*.db
+data/roads/
+cache/
+dist/

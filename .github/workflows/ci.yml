@@ -1,0 +1,102 @@
+name: CI
+
+on:
+  push:
+    branches: [main, master]
+  pull_request:
+    branches: [main, master]
+
+jobs:
+  # ── 1. Smoke-test the core pipeline ────────────────────────────────────────
+  test:
+    name: Core pipeline (offline, simulated sensors)
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Run one loop iteration (offline mode)
+        env:
+          DISASTER_APP_MODE: offline
+        run: python main.py --once
+
+  # ── 2. Verify Flask server starts and responds ─────────────────────────────
+  server:
+    name: Flask server health check
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Start server in background
+        env:
+          DISASTER_APP_MODE: offline
+        run: python -m backend.server &
+
+      - name: Wait for server to be ready
+        run: |
+          for i in $(seq 1 10); do
+            curl -sf http://localhost:5000/api/status && break
+            sleep 1
+          done
+
+      - name: Check /api/status
+        run: |
+          STATUS=$(curl -sf http://localhost:5000/api/status)
+          echo "Response: $STATUS"
+          echo "$STATUS" | grep -q '"online"'
+
+      - name: Check /api/readings
+        run: curl -sf http://localhost:5000/api/readings | grep -q '\[\]'
+
+      - name: Check /api/alerts
+        run: curl -sf http://localhost:5000/api/alerts | grep -q '\[\]'
+
+  # ── 3. Import check — every module loads without error ────────────────────
+  imports:
+    name: Module import check
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Import all modules
+        env:
+          DISASTER_APP_MODE: offline
+        run: |
+          python -c "from config.settings import *"
+          python -c "from database.db import init_db, save_reading, recent_readings"
+          python -c "from sensors.reader import read_sensors, get_gps_location"
+          python -c "from network.connectivity import is_online"
+          python -c "from network.weather import fetch_weather_context"
+          python -c "from agents.flood_agent import check_flood_risk"
+          python -c "from agents.earthquake_agent import check_earthquake_risk"
+          python -c "from agents.graph import run_agent"
+          python -c "from alerts.dispatcher import dispatch_alert"

@@ -1,0 +1,18 @@
+langgraph>=0.2.0
+langchain-core>=0.3.0
+fastapi>=0.115.0
+uvicorn[standard]>=0.32.0
+requests>=2.32.0
+python-dotenv>=1.0.0
+
+# Used for LLM-assisted reasoning, on by default the moment the system is
+# online and GROQ_API_KEY is set (see config/settings.py). The import
+# itself is lazy (agents/graph.py), so the app still runs fine offline or
+# with no key -- this is only needed to actually get the write-up.
+groq>=0.11.0
+
+networkx>=3.2
+
+osmnx
+
+scikit-learn

@@ -1,0 +1,358 @@
+<title>Disaster Connect Report</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600;700&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f6f8fa; --paper:#ffffff; --ink:#15212b; --ink2:#485867; --rule:#d6dee6;
+  --teal:#0d6b73; --teal-soft:#e2f1f2; --alarm:#c8401a; --alarm-soft:#fbe9e2; --amber:#b7791f;
+  --node:#ffffff; --node-line:#3b4b59; --ok:#2f7d4f;
+  --serif:"Source Serif 4",Georgia,"Times New Roman",serif;
+  --sans:"IBM Plex Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,Consolas,monospace;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#0e161d; --paper:#141e27; --ink:#e6edf3; --ink2:#9db0bf; --rule:#26343f;
+    --teal:#4fc1c9; --teal-soft:#123239; --alarm:#ff7a52; --alarm-soft:#3a1f17; --amber:#e3b45c;
+    --node:#182530; --node-line:#8ea3b3; --ok:#6fcf97;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#0e161d; --paper:#141e27; --ink:#e6edf3; --ink2:#9db0bf; --rule:#26343f;
+  --teal:#4fc1c9; --teal-soft:#123239; --alarm:#ff7a52; --alarm-soft:#3a1f17; --amber:#e3b45c;
+  --node:#182530; --node-line:#8ea3b3; --ok:#6fcf97;
+}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--serif);font-size:17px;line-height:1.65;margin:0;padding-inline:16px;padding-block:24px 64px}
+.paper{max-width:820px;margin:0 auto;background:var(--paper);border:1px solid var(--rule);padding:clamp(20px,5vw,56px)}
+header.title{border-bottom:2px solid var(--ink);padding-bottom:22px;margin-bottom:28px}
+.kicker{font:600 12px/1 var(--sans);letter-spacing:.14em;text-transform:uppercase;color:var(--alarm);margin:0 0 14px}
+h1{font:700 clamp(30px,6vw,46px)/1.1 var(--sans);letter-spacing:-.02em;margin:0 0 12px;text-wrap:balance}
+.sub{font:400 18px/1.5 var(--sans);color:var(--ink2);margin:0 0 16px;max-width:60ch}
+.meta{font:400 13px/1.6 var(--mono);color:var(--ink2);margin:0}
+h2{font:700 24px/1.2 var(--sans);letter-spacing:-.01em;margin:44px 0 6px;text-wrap:balance}
+h2 .n{font-family:var(--mono);font-weight:500;color:var(--teal);margin-right:10px}
+h3{font:600 17px/1.3 var(--sans);margin:26px 0 4px}
+p{margin:10px 0;max-width:66ch}
+.abstract{background:var(--teal-soft);padding:18px 22px;margin:0 0 8px}
+.abstract h2{margin:0 0 6px;font-size:14px;letter-spacing:.12em;text-transform:uppercase;color:var(--teal)}
+.abstract p{margin:0}
+.callout{border-left:4px solid var(--alarm);background:var(--alarm-soft);padding:12px 18px;margin:18px 0;max-width:66ch}
+.callout p{margin:0}
+.callout b{font-family:var(--sans)}
+figure{margin:24px 0}
+figure .fig{overflow-x:auto;border:1px solid var(--rule);background:var(--bg);padding:14px}
+figure svg{display:block;width:100%;min-width:560px;height:auto;color:var(--ink)}
+figcaption{font:400 14px/1.5 var(--sans);color:var(--ink2);margin-top:8px;max-width:70ch}
+figcaption b{color:var(--ink)}
+.tablewrap{overflow-x:auto;margin:18px 0}
+table{border-collapse:collapse;width:100%;min-width:560px;font:400 15px/1.45 var(--sans)}
+th{text-align:left;font:600 12px/1.3 var(--sans);letter-spacing:.08em;text-transform:uppercase;color:var(--ink2);border-bottom:2px solid var(--ink);padding:8px 12px 8px 0}
+td{padding:10px 12px 10px 0;border-bottom:1px solid var(--rule);vertical-align:top}
+td.num,.mono{font-family:var(--mono);font-variant-numeric:tabular-nums}
+.pass{color:var(--ok);font-weight:600}
+.warn{color:var(--amber);font-weight:600}
+ol.ladder{list-style:none;padding:0;margin:14px 0;display:flex;flex-wrap:wrap;gap:8px;font:600 14px/1 var(--sans)}
+ol.ladder li{padding:10px 14px;border:1px solid var(--node-line);background:var(--node)}
+ol.ladder li:first-child{background:var(--alarm);border-color:var(--alarm);color:#fff}
+ol.ladder li small{display:block;font-weight:400;color:inherit;opacity:.8;margin-top:4px;font-size:12px}
+dl.gloss{display:grid;grid-template-columns:minmax(0,180px) minmax(0,1fr);gap:8px 20px;font:400 15px/1.5 var(--sans)}
+dl.gloss dt{font-weight:600}
+dl.gloss dd{margin:0;color:var(--ink2)}
+@media (max-width:560px){dl.gloss{grid-template-columns:1fr;gap:2px}dl.gloss dd{margin-bottom:10px}}
+ul.tight{padding-left:20px;max-width:66ch}
+ul.tight li{margin:4px 0}
+code{font:500 .86em var(--mono);background:var(--teal-soft);padding:1px 5px}
+footer{margin-top:44px;padding-top:16px;border-top:1px solid var(--rule);font:400 13px/1.6 var(--sans);color:var(--ink2)}
+/* svg parts */
+.nd{fill:var(--node);stroke:var(--node-line);stroke-width:1.4}
+.nd-hot{fill:var(--alarm-soft);stroke:var(--alarm);stroke-width:1.6}
+.nd-cool{fill:var(--teal-soft);stroke:var(--teal);stroke-width:1.6}
+.zone{fill:none;stroke:var(--node-line);stroke-width:1.2;stroke-dasharray:6 5}
+.t{font:600 13px var(--sans);fill:var(--ink)}
+.s{font:400 11.5px var(--sans);fill:var(--ink2)}
+.lab{font:500 11px var(--mono);fill:var(--ink2)}
+.ar{stroke:var(--node-line);stroke-width:1.6;fill:none}
+.ard{stroke:var(--node-line);stroke-width:1.4;fill:none;stroke-dasharray:5 4}
+.arhead{fill:var(--node-line)}
+.sig{stroke:var(--alarm);stroke-width:2;fill:none}
+.base{stroke:var(--teal);stroke-width:1.4;stroke-dasharray:5 4}
+@media print{body{background:#fff;padding:0}.paper{border:0;padding:0}figure svg{min-width:0}}
+</style>
+
+<article class="paper">
+
+<header class="title">
+  <p class="kicker">Project report</p>
+  <h1>Disaster Connect: a small computer that warns you before trouble arrives</h1>
+  <p class="sub">How the Local Disaster Watch system spots floods, earthquakes, storms and tsunamis, how it works even with no internet, and how we checked that it does its job.</p>
+  <p class="meta">September 2026 · Python, FastAPI, LangGraph, SQLite · runs on a Windows PC, shown in a phone-style web app</p>
+</header>
+
+<section class="abstract">
+  <h2>Abstract</h2>
+  <p>Disasters do not wait for a good internet connection. We built a program that reads sensors every few seconds, checks them against safety limits for four dangers (flood, earthquake, storm and tsunami), and raises an alarm when a limit is crossed. The decision is made by simple, readable rules, so it is fast and can be explained. When the internet is available the program adds extras: live weather, nearby shelters and a friendly sentence explaining the alert. When it is not, the core alarm still works. We packaged everything into one zip file that runs by double-clicking. In our tests all 14 program parts loaded, every web address answered, and the storm and tsunami detectors fired correctly on test values.</p>
+</section>
+
+<h2><span class="n">1</span>What problem are we solving?</h2>
+<p>Think about a smoke alarm. It is cheap, it sits quietly, and it does one job: it screams when there is smoke. It does not need Wi-Fi to do that.</p>
+<p>Natural dangers are harder. A flood, an earthquake, a storm and a tsunami each show up in different ways, and when they hit, phone networks are often the first thing to fail. Our goal was a <b>smoke alarm for many dangers at once</b>, with three promises:</p>
+<ul class="tight">
+  <li><b>It keeps working offline.</b> The alarm decision never waits for the internet.</li>
+  <li><b>It can explain itself.</b> Every alert says why, for example “wind speed 120 km/h is above the limit of 70 km/h”.</li>
+  <li><b>It is easy to run.</b> One zip, one double-click.</li>
+</ul>
+
+<h2><span class="n">2</span>The big idea in one minute</h2>
+<p>The system is like a school nurse with a checklist. Every few seconds she takes the readings (temperature, heartbeat, and so on) and compares them with the numbers on the checklist. If one is too high, she rings the bell. She does not guess. She follows the list, and she can always tell you which line on the list was crossed.</p>
+<p>Our “nurse” is a set of four small programs called <b>detectors</b>, one for each danger. A fifth step picks the most serious result and sends the alert.</p>
+
+<h2><span class="n">3</span>The whole system on one page</h2>
+<p>Figure 1 shows everything. Information flows left to right: things come in, the brain decides, results go out.</p>
+
+<figure>
+  <div class="fig">
+  <svg viewBox="0 0 760 360" role="img" aria-label="System overview: sensors, phone location and internet feed the Python brain, which sends alerts, saves history and updates the phone screens.">
+    <defs><marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" class="arhead"/></marker></defs>
+    <text class="lab" x="20" y="16">INPUTS</text><text class="lab" x="270" y="16">THE BRAIN</text><text class="lab" x="580" y="16">OUTPUTS</text>
+
+    <rect class="nd" x="20" y="30" width="180" height="60"/><text class="t" x="34" y="54">Sensors</text><text class="s" x="34" y="72">water · rain · pressure</text><text class="s" x="34" y="85">shaking · wind · sea level</text>
+    <rect class="nd" x="20" y="150" width="180" height="60"/><text class="t" x="34" y="174">Phone location</text><text class="s" x="34" y="192">GPS: where are you?</text>
+    <rect class="nd" x="20" y="270" width="180" height="60"/><text class="t" x="34" y="294">Internet (optional)</text><text class="s" x="34" y="312">weather · shelters · past quakes</text>
+
+    <rect class="zone" x="270" y="30" width="240" height="300"/>
+    <rect class="nd-cool" x="290" y="50" width="200" height="60"/><text class="t" x="304" y="74">4 detectors</text><text class="s" x="304" y="92">flood · quake · storm · tsunami</text>
+    <rect class="nd-hot" x="290" y="150" width="200" height="60"/><text class="t" x="304" y="174">Decision</text><text class="s" x="304" y="192">pick the most serious danger</text>
+    <rect class="nd" x="290" y="250" width="200" height="60"/><text class="t" x="304" y="274">Friendly sentence</text><text class="s" x="304" y="292">online only, can only reword</text>
+    <line class="ar" x1="390" y1="110" x2="390" y2="148" marker-end="url(#ah)"/>
+    <line class="ar" x1="390" y1="210" x2="390" y2="248" marker-end="url(#ah)"/>
+
+    <line class="ar" x1="200" y1="60" x2="288" y2="70" marker-end="url(#ah)"/>
+    <line class="ar" x1="200" y1="180" x2="288" y2="180" marker-end="url(#ah)"/>
+    <line class="ard" x1="200" y1="300" x2="288" y2="285" marker-end="url(#ah)"/>
+
+    <rect class="nd-hot" x="580" y="30" width="160" height="60"/><text class="t" x="594" y="54">Alerts</text><text class="s" x="594" y="72">buzzer · SMS · app push</text>
+    <rect class="nd" x="580" y="150" width="160" height="60"/><text class="t" x="594" y="174">Saved history</text><text class="s" x="594" y="192">a small SQLite file</text>
+    <rect class="nd" x="580" y="270" width="160" height="60"/><text class="t" x="594" y="294">Phone-style screens</text><text class="s" x="594" y="312">risk · shelters · SOS</text>
+    <line class="ar" x1="490" y1="180" x2="578" y2="65" marker-end="url(#ah)"/>
+    <line class="ar" x1="490" y1="180" x2="578" y2="180" marker-end="url(#ah)"/>
+    <line class="ar" x1="490" y1="280" x2="578" y2="298" marker-end="url(#ah)"/>
+    <text class="lab" x="200" y="352">dashed = only when internet exists</text>
+  </svg>
+  </div>
+  <figcaption><b>Figure 1.</b> The system has three parts: inputs, a Python “brain” with four detectors, and outputs. The dashed arrow (internet) is optional; everything else works alone.</figcaption>
+</figure>
+
+<h3>The pieces, in plain words</h3>
+<dl class="gloss">
+  <dt>Sensors</dt><dd>Devices that measure the world: how high the water is, how hard it is raining, how fast the wind blows, how much the ground shakes. In our demo they are <b>simulated</b> by a program that makes realistic numbers, with an occasional dangerous spike.</dd>
+  <dt>Detectors (agents)</dt><dd>Four small rule-checkers. Each looks at the numbers for one danger.</dd>
+  <dt>Backend (FastAPI)</dt><dd>The waiter between the brain and the screens. The screens ask, “what is the risk right now?” and the backend answers.</dd>
+  <dt>Database (SQLite)</dt><dd>A notebook on disk. Every reading and every alert is written down so you can look back at history.</dd>
+  <dt>Screens</dt><dd>A phone-style web page with five views: Home, Shelter, SOS, Prediction and Report.</dd>
+</dl>
+
+<h2><span class="n">4</span>How the program makes a decision</h2>
+<p>Each cycle follows the same steps. The readings go to all four detectors one after another. Then a “combine” step looks at their answers and picks the worst. Figure 2 shows the path.</p>
+
+<figure>
+  <div class="fig">
+  <svg viewBox="0 0 760 290" role="img" aria-label="Decision pipeline: readings go through four detectors, a combine step picks the most serious, an optional sentence writer rewords it, then the alert is sent.">
+    <defs><marker id="ah2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" class="arhead"/></marker></defs>
+    <rect class="nd" x="10" y="100" width="120" height="64"/><text class="t" x="24" y="126">Readings</text><text class="s" x="24" y="144">+ weather if online</text>
+
+    <rect class="nd-cool" x="180" y="18" width="150" height="46"/><text class="t" x="194" y="46">Flood</text>
+    <rect class="nd-cool" x="180" y="78" width="150" height="46"/><text class="t" x="194" y="106">Earthquake</text>
+    <rect class="nd-cool" x="180" y="138" width="150" height="46"/><text class="t" x="194" y="166">Storm</text>
+    <rect class="nd-cool" x="180" y="198" width="150" height="46"/><text class="t" x="194" y="226">Tsunami</text>
+    <line class="ar" x1="130" y1="132" x2="178" y2="41" marker-end="url(#ah2)"/>
+    <line class="ar" x1="130" y1="132" x2="178" y2="101" marker-end="url(#ah2)"/>
+    <line class="ar" x1="130" y1="132" x2="178" y2="161" marker-end="url(#ah2)"/>
+    <line class="ar" x1="130" y1="132" x2="178" y2="221" marker-end="url(#ah2)"/>
+
+    <rect class="nd-hot" x="390" y="100" width="130" height="64"/><text class="t" x="404" y="126">Combine</text><text class="s" x="404" y="144">worst one wins</text>
+    <line class="ar" x1="330" y1="41" x2="388" y2="122" marker-end="url(#ah2)"/>
+    <line class="ar" x1="330" y1="101" x2="388" y2="128" marker-end="url(#ah2)"/>
+    <line class="ar" x1="330" y1="161" x2="388" y2="138" marker-end="url(#ah2)"/>
+    <line class="ar" x1="330" y1="221" x2="388" y2="150" marker-end="url(#ah2)"/>
+    <text class="lab" x="340" y="264">each says “low” or “high” + a reason</text>
+
+    <rect class="nd" x="560" y="30" width="190" height="60"/><text class="t" x="574" y="54">Explain (optional)</text><text class="s" x="574" y="72">online only; cannot change risk</text>
+    <rect class="nd-hot" x="560" y="170" width="190" height="60"/><text class="t" x="574" y="194">Send alert</text><text class="s" x="574" y="212">buzzer · SMS · push · save</text>
+    <polyline class="ar" points="520,132 540,132 540,60 558,60" marker-end="url(#ah2)"/>
+    <line class="ar" x1="655" y1="90" x2="655" y2="168" marker-end="url(#ah2)"/>
+  </svg>
+  </div>
+  <figcaption><b>Figure 2.</b> Every detector answers “low” or “high” with a reason. Combine keeps the most serious one. The optional explain step only rewrites the wording afterwards.</figcaption>
+</figure>
+
+<div class="callout"><p><b>An important safety rule:</b> the risky decision is made only by the rules. The AI writer (a language model reached through the Groq service) is allowed to make the sentence friendlier, but it can never change “high” to “low”. If it fails or the internet is down, the plain rule sentence is used instead.</p></div>
+
+<h3>What if two dangers happen at once?</h3>
+<p>Only one headline is shown, chosen by this order. It goes from the danger that leaves the least time to react, to the one that usually leaves the most.</p>
+<ol class="ladder">
+  <li>Tsunami<small>first</small></li>
+  <li>Earthquake<small>second</small></li>
+  <li>Storm<small>third</small></li>
+  <li>Flood<small>fourth</small></li>
+</ol>
+
+<h2><span class="n">5</span>The four detectors</h2>
+<p>Each detector has a limit taken from the settings file. Above the limit means “high”. The limits are stored in one place, so changing a number there changes it everywhere.</p>
+
+<div class="tablewrap">
+<table>
+  <thead><tr><th>Danger</th><th>What it watches</th><th>Alarm limit</th><th>Like&nbsp;…</th></tr></thead>
+  <tbody>
+    <tr><td><b>Flood</b></td><td>Water level and rain rate</td><td class="num">water 80 cm · rain 30 mm/hr</td><td>Water creeping up the steps of a house.</td></tr>
+    <tr><td><b>Earthquake</b></td><td>Ground shaking now, compared with the recent average</td><td class="num">3.0× the normal</td><td>A quiet classroom that suddenly gets very loud.</td></tr>
+    <tr><td><b>Storm</b></td><td>Wind speed, extreme rain, and a “thunderstorm” code from the weather service</td><td class="num">wind 70 km/h · rain 50 mm/hr</td><td>Trees bending in a strong gust.</td></tr>
+    <tr><td><b>Tsunami</b></td><td>How fast the <i>sea</i> level changes (a coastal tide gauge)</td><td class="num">50 cm change</td><td>A bathtub sloshing when someone drops in.</td></tr>
+  </tbody>
+</table>
+</div>
+
+<h3>Earthquake: a spike against calm</h3>
+<p>Ground always shakes a tiny bit (trucks, footsteps). So the detector does not use a fixed number. It compares the <b>short-term average</b> (the last few readings) with the <b>long-term average</b> (the usual level). If the ratio jumps above 3, something unusual is happening. This idea is called STA/LTA and is a classic in real seismology.</p>
+
+<figure>
+  <div class="fig">
+  <svg viewBox="0 0 760 230" role="img" aria-label="Illustration of a shaking signal: small wiggles around a dashed long-term average, then a large spike that triggers the alarm.">
+    <line x1="50" y1="20" x2="50" y2="190" stroke="currentColor" stroke-width="1.2"/>
+    <line x1="50" y1="190" x2="730" y2="190" stroke="currentColor" stroke-width="1.2"/>
+    <text class="lab" x="8" y="14">shaking</text><text class="lab" x="672" y="212">time →</text>
+    <line class="base" x1="50" y1="150" x2="730" y2="150"/>
+    <text class="lab" x="56" y="140">long-term average (normal)</text>
+    <polyline class="sig" points="50,150 80,146 110,153 140,148 170,154 200,147 230,151 260,145 290,153 320,148 350,152 380,146 410,151 440,149 460,150 480,118 495,60 510,175 525,40 540,160 555,80 570,140 590,128 610,146 640,149 670,150 700,148 730,150"/>
+    <rect x="470" y="30" width="110" height="150" fill="none" stroke="var(--alarm)" stroke-width="1.4" stroke-dasharray="4 3"/>
+    <text class="t" x="476" y="24" style="fill:var(--alarm)">short window</text>
+    <text class="s" x="590" y="70">ratio far above 3 →</text>
+    <text class="t" x="590" y="88" style="fill:var(--alarm)">ALARM: high</text>
+  </svg>
+  </div>
+  <figcaption><b>Figure 3.</b> An <b>illustration</b> (not real data). Small wiggles are normal. When the recent window shakes much harder than the dashed normal level, the detector says “high”.</figcaption>
+</figure>
+
+<h3>Tsunami: only trust the sea</h3>
+<p>A tsunami warning is serious, so we made this detector strict. It reads a <b>coastal sea-level</b> value only. A river or pond level is <b>not</b> accepted as evidence, because a rising river is a flood, not a tsunami.</p>
+
+<h2><span class="n">6</span>Working with and without the internet</h2>
+<p>This is the heart of the design. The alarm must never depend on the cloud, so the internet is treated as a bonus.</p>
+
+<figure>
+  <div class="fig">
+  <svg viewBox="0 0 760 270" role="img" aria-label="Two lanes: the top lane always works offline (sensors, rules, buzzer and SMS); the bottom lane adds weather, an AI sentence, app push and shelter search only when online.">
+    <defs><marker id="ah3" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" class="arhead"/></marker></defs>
+    <text class="t" x="10" y="20" style="fill:var(--teal)">ALWAYS WORKS · no internet needed</text>
+    <rect class="nd-cool" x="10" y="34" width="190" height="64"/><text class="t" x="24" y="60">Read sensors</text><text class="s" x="24" y="78">every few seconds</text>
+    <rect class="nd-cool" x="290" y="34" width="190" height="64"/><text class="t" x="304" y="60">Check the rules</text><text class="s" x="304" y="78">4 detectors, local</text>
+    <rect class="nd-hot" x="570" y="34" width="180" height="64"/><text class="t" x="584" y="60">Buzzer + SMS</text><text class="s" x="584" y="78">work without internet</text>
+    <line class="ar" x1="200" y1="66" x2="288" y2="66" marker-end="url(#ah3)"/>
+    <line class="ar" x1="480" y1="66" x2="568" y2="66" marker-end="url(#ah3)"/>
+
+    <text class="t" x="10" y="150" style="fill:var(--ink2)">BONUS · only when online</text>
+    <rect class="nd" x="10" y="164" width="190" height="64" style="stroke-dasharray:5 4"/><text class="t" x="24" y="190">Live weather</text><text class="s" x="24" y="208">Open-Meteo, thunderstorm code</text>
+    <rect class="nd" x="290" y="164" width="190" height="64" style="stroke-dasharray:5 4"/><text class="t" x="304" y="190">Friendly sentence</text><text class="s" x="304" y="208">Groq language model</text>
+    <rect class="nd" x="570" y="164" width="180" height="64" style="stroke-dasharray:5 4"/><text class="t" x="584" y="190">Push + shelters</text><text class="s" x="584" y="208">OpenStreetMap search</text>
+    <line class="ard" x1="105" y1="164" x2="360" y2="100" marker-end="url(#ah3)"/>
+    <line class="ard" x1="480" y1="196" x2="568" y2="196" marker-end="url(#ah3)"/>
+    <text class="lab" x="10" y="256">readings taken while offline are marked “unsynced” and are caught up when the connection returns</text>
+  </svg>
+  </div>
+  <figcaption><b>Figure 4.</b> Top lane: the parts that keep you safe with no signal. Bottom lane: extras that make alerts richer, but are never required.</figcaption>
+</figure>
+
+<p>While offline, every reading is saved to the local database with a flag “not synced yet”. When the program notices the internet is back, it goes through those saved rows and marks them synced. That way nothing recorded during the outage is lost.</p>
+
+<h2><span class="n">7</span>What the user sees</h2>
+<p>The phone-style web app has five screens. The screen asks your phone for its position, sends it to the backend, and shows the answer.</p>
+<ul class="tight">
+  <li><b>Home</b>: the risk level right now, each of the four dangers, the live sensor numbers and the local weather.</li>
+  <li><b>Shelter</b>: nearby safe places (hospitals, community centres, fire and police stations, stadiums, tagged shelters) from OpenStreetMap, within 5 km, widening the search if none are found.</li>
+  <li><b>SOS</b>: a big button that calls the national emergency number, plus police, fire and ambulance numbers.</li>
+  <li><b>Prediction</b>: charts of recent water and shaking readings. They show activity trends. They do <b>not</b> predict earthquakes.</li>
+  <li><b>Report</b>: the history of past alerts.</li>
+</ul>
+
+<h2><span class="n">8</span>Putting it in a box: the zip file</h2>
+<p>Most programs fail on someone else’s computer because they need other software installed first. We avoided this by putting <b>everything inside one folder</b>: our code, the libraries, and a small copy of Python itself.</p>
+<ol class="tight">
+  <li>Unzip <code>DisasterWatch.zip</code> anywhere.</li>
+  <li>Double-click <code>START.bat</code>.</li>
+  <li>The browser opens at <code>http://localhost:5000</code>.</li>
+</ol>
+<p>The history database is created inside the folder’s <code>data</code> directory, so it is saved between runs. The zip does not include the private <code>.env</code> file, where the AI service key lives. The build script <code>build_portable.py</code> rebuilds the zip after any change.</p>
+
+<h2><span class="n">9</span>How we tested it</h2>
+<p>We ran the same checks the project’s automatic test file uses, then added our own for the new storm and tsunami detectors.</p>
+
+<div class="tablewrap">
+<table>
+  <thead><tr><th>Test</th><th>What we did</th><th>Result</th></tr></thead>
+  <tbody>
+    <tr><td>Parts load</td><td>Imported all 14 program modules</td><td class="pass">All 14 loaded</td></tr>
+    <tr><td>One full cycle</td><td>Ran <code>main.py --once</code> offline</td><td class="pass">Finished; printed a risk line</td></tr>
+    <tr><td>Web server</td><td>Called <code>/api/status</code>, <code>/api/config</code>, the page, and the live dashboard</td><td class="pass">All answered normally</td></tr>
+    <tr><td>Storm detector</td><td>Fed wind 120 km/h, then rain 200 mm/hr</td><td class="pass">Both gave “high storm”</td></tr>
+    <tr><td>Tsunami detector</td><td>Fed a 300 cm sea-level change</td><td class="pass">Gave “high tsunami”</td></tr>
+    <tr><td>Zip on its own</td><td>Unzipped elsewhere and ran using only the bundled Python</td><td class="pass">Worked; database created</td></tr>
+    <tr><td>Live weather</td><td>Asked the dashboard for Pune</td><td class="pass">Returned real weather data</td></tr>
+  </tbody>
+</table>
+</div>
+
+<h3>Problems we found and fixed</h3>
+<ul class="tight">
+  <li><b>Storm and tsunami seemed “not working”.</b> The server running on the screen had started <i>before</i> those files were added, so it was running old code. Restarting fixed it.</li>
+  <li><b>The manual test form dropped the new values.</b> It ignored wind speed and sea-level change, so storm and tsunami could not be triggered by hand. We added both fields.</li>
+  <li><b>Missing libraries.</b> A fresh Python had none of the needed packages. The zip now carries them.</li>
+  <li><b>Dead files.</b> An old desktop dashboard and its scripts were no longer used, so we removed them.</li>
+</ul>
+
+<h2><span class="n">10</span>Limits: what this is <i>not</i></h2>
+<div class="callout"><p><b>Please read this part.</b> This is a learning and demonstration project. It is <b>not</b> an official warning system, and nobody should rely on it to stay safe.</p></div>
+<ul class="tight">
+  <li><b>Sensor data is simulated.</b> Real sensors would need real hardware (a setting exists for it, but we did not test hardware).</li>
+  <li><b>SMS is only printed.</b> The program writes “SMS to …” in its log; it does not yet send a real text message.</li>
+  <li><b>Detection is rule-based.</b> Fixed limits can miss slow dangers or fire on a faulty sensor. Limits should be tuned for each place.</li>
+  <li><b>The live earthquake check only sees shaking.</b> It cannot say how strong the quake was or how far away it started.</li>
+  <li><b>Shelter results are unverified.</b> They come from a public map and may be out of date.</li>
+  <li><b>Alerts show only while the app is open.</b> There is no background phone notification service.</li>
+  <li><b>No login.</b> Anyone who can reach the server can read its data, so it should stay on a trusted network.</li>
+  <li><b>The zip is for Windows (64-bit)</b> only.</li>
+</ul>
+
+<h2><span class="n">11</span>What we could do next</h2>
+<ul class="tight">
+  <li>Connect real sensors and a real SMS service.</li>
+  <li>Add true phone notifications so alerts arrive when the app is closed.</li>
+  <li>Use several stations to confirm an alert before sounding it, which lowers false alarms.</li>
+  <li>Add a login and host the server so it can be used from anywhere.</li>
+  <li>Translate the app and the emergency numbers for other countries.</li>
+</ul>
+
+<h2><span class="n">12</span>Word list</h2>
+<dl class="gloss">
+  <dt>Offline-first</dt><dd>Designed to work with no internet, and to use it only as a bonus.</dd>
+  <dt>Rule-based</dt><dd>Decisions come from clear if-then rules, not a black box.</dd>
+  <dt>STA/LTA</dt><dd>Short-term average divided by long-term average. It spots sudden shaking.</dd>
+  <dt>Tide gauge</dt><dd>A device on the coast that measures the sea level.</dd>
+  <dt>API</dt><dd>A menu of questions one program can ask another, for example “what is the risk?”.</dd>
+  <dt>SQLite</dt><dd>A whole database kept in one file.</dd>
+  <dt>LLM</dt><dd>A language model, the kind of AI that writes sentences.</dd>
+  <dt>False alarm</dt><dd>An alert when there is no real danger.</dd>
+</dl>
+
+<h2><span class="n">13</span>Tools and sources</h2>
+<ul class="tight">
+  <li>Python 3.13, FastAPI and Uvicorn for the web server.</li>
+  <li>LangGraph for running the detectors in order.</li>
+  <li>SQLite for local storage.</li>
+  <li>Open-Meteo for weather data and thunderstorm codes.</li>
+  <li>OpenStreetMap (Overpass API) for nearby shelters.</li>
+  <li>Groq for the optional friendly sentence.</li>
+</ul>
+
+<footer>Everything in this report describes the project as it was built and tested on 20 September 2026. Numbers such as limits come from the project’s settings file; test results are from runs made on the developer’s Windows PC.</footer>
+
+</article>
